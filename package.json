@@ -1,0 +1,31 @@
+{
+  "name": "debloater",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Switch off or remove preinstalled apps on Google TV / Android TV over adb, from one Windows program",
+  "scripts": {
+    "start": "node server/main.js",
+    "dev:web": "vite",
+    "build:web": "vite build",
+    "build": "node scripts/build-exe.mjs",
+    "build:launcher": "node launcher/build.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@fontsource/inter": "^5.1.1",
+    "@fontsource/jetbrains-mono": "^5.1.1",
+    "@phosphor-icons/web": "^2.1.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "esbuild": "^0.24.2",
+    "postject": "^1.0.0-alpha.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^5.4.11"
+  }
+}
