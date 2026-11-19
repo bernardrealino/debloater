@@ -96,6 +96,7 @@ export default function App() {
           </>
         )}
       </main>
+      <footer className="foot">Made by Bernardinus Realino</footer>
       {toast && <div className="toast" role="status"><Icon name="info" fill /><span>{toast}</span></div>}
     </div>
   );

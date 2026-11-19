@@ -10,6 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
+import { rcedit } from 'rcedit';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const BUILD = path.join(ROOT, 'build');
@@ -55,6 +56,13 @@ node(['--experimental-sea-config', config]);
 console.log('4/4 Writing the program');
 fs.rmSync(OUT, { force: true });
 fs.copyFileSync(process.execPath, OUT);
+if (process.platform === 'win32') {
+  // Must happen before the blob is injected: editing resources afterwards corrupts the exe.
+  await rcedit(OUT, {
+    icon: path.join(ROOT, 'assets', 'icon.ico'),
+    'version-string': { ProductName: 'Debloater', FileDescription: 'Debloater', OriginalFilename: 'debloater.exe', InternalName: 'debloater', LegalCopyright: 'Bernardinus Realino' },
+  });
+}
 const postject = path.join(ROOT, 'node_modules', 'postject', 'dist', 'cli.js');
 node([postject, OUT, 'NODE_SEA_BLOB', blob, '--sentinel-fuse', 'NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2', ...(process.platform === 'darwin' ? ['--macho-segment-name', 'NODE_SEA'] : [])]);
 if (process.platform === 'darwin') execFileSync('codesign', ['--sign', '-', OUT], { stdio: 'inherit' });
